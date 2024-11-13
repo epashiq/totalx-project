@@ -1,12 +1,15 @@
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:totalx_project/view/pages/otp_verification_page.dart';
+import 'package:provider/provider.dart';
+import 'package:totalx_project/controller/provider/auth_provider.dart';
 
 class PhoneNumberAuthPage extends StatelessWidget {
   const PhoneNumberAuthPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context);
     return Scaffold(
       body: SafeArea(
           child: Padding(
@@ -37,6 +40,7 @@ class PhoneNumberAuthPage extends StatelessWidget {
               height: 20,
             ),
             TextFormField(
+              controller: authProvider.mobileController,
               keyboardType: TextInputType.phone,
               decoration: InputDecoration(
                 hintText: 'Enter Phone Number * ',
@@ -77,11 +81,8 @@ class PhoneNumberAuthPage extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const OTPVerificationPage(),
-                    ));
+                authProvider.signInWithPhone(
+                    authProvider.mobileController.text, context);
               },
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(338, 44),
@@ -103,5 +104,11 @@ class PhoneNumberAuthPage extends StatelessWidget {
         ),
       )),
     );
+  }
+
+  void sedPhoneNumber(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    String phoneNumber = authProvider.mobileController.text.trim();
+    authProvider.signInWithPhone(phoneNumber, context);
   }
 }

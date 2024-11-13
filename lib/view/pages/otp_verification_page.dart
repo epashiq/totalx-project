@@ -3,9 +3,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'dart:async';
 
 import 'package:pinput/pinput.dart';
+import 'package:provider/provider.dart';
+import 'package:totalx_project/controller/provider/auth_provider.dart';
 
 class OTPVerificationPage extends StatefulWidget {
-  const OTPVerificationPage({super.key});
+  final String verificationId;
+  final int? resendToken;
+  const OTPVerificationPage(
+      {super.key, required this.verificationId, required this.resendToken});
 
   @override
   _OTPVerificationPageState createState() => _OTPVerificationPageState();
@@ -42,6 +47,7 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context);
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -152,7 +158,26 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
               ),
               const SizedBox(height: 16.0),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  String otp = _otpController.text.trim();
+                  if (otp.isNotEmpty) {
+                    try {
+                      await authProvider.verifyOtp(
+                        otp,
+                      );
+                      // Proceed to next page or success screen
+                      Navigator.pushReplacementNamed(context, '/home');
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('OTP verification failed')),
+                      );
+                    }
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Please enter OTP')),
+                    );
+                  }
+                },
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size(338, 44),
                   backgroundColor: const Color(0xFF100E09),
