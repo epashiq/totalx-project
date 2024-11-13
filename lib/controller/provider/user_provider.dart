@@ -15,7 +15,7 @@
 
 //   final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 //   FirebaseStorage storage = FirebaseStorage.instance;
-      
+
 //   Future addUser()async{
 //     try {
 //       await firebaseFirestore.collection('user').doc('').set({
@@ -34,7 +34,7 @@
 //       photo = File(pickedFile.path);
 //       notifyListeners();
 //     } else {
-    
+
 //     }
 //   }
 
@@ -86,12 +86,17 @@ class UserProvider with ChangeNotifier {
   final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   final FirebaseStorage storage = FirebaseStorage.instance;
 
-  Future<void> addUser(String? imageUrl) async {
+  Future<void> addUser() async {
+    String? imageUrl = await uploadImage();
+
+    if (imageUrl == null) {
+      return;
+    }
     try {
       await firebaseFirestore.collection('user').add({
         'name': nameController.text,
         'phone': phoneController.text,
-        'imageUrl': imageUrl ?? '', // Pass uploaded image URL
+        'imageUrl': imageUrl, // Pass uploaded image URL
       });
       log('User added successfully');
     } catch (e) {
@@ -135,7 +140,7 @@ class UserProvider with ChangeNotifier {
     }
   }
 
-   Future<String?> getImageUrl() async {
+  Future<String?> getImageUrl() async {
     try {
       final storageRef = FirebaseStorage.instance
           .ref()
@@ -147,6 +152,7 @@ class UserProvider with ChangeNotifier {
       return null;
     }
   }
+
   Future<void> saveImageUrlToFirestore(
       String employeeId, String imageUrl) async {
     await FirebaseFirestore.instance
@@ -155,12 +161,7 @@ class UserProvider with ChangeNotifier {
         .update({'photo Url': imageUrl});
   }
 
-  Future<void> saveUserData() async {
-    String? imageUrl = await uploadImage();
-    await addUser(imageUrl); // Save user with image URL
-  }
-
-   Future<void> showImagePickerOptions(BuildContext context) async {
+  Future<void> showImagePickerOptions(BuildContext context) async {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext bc) {
@@ -189,6 +190,7 @@ class UserProvider with ChangeNotifier {
       },
     );
   }
+
   @override
   void dispose() {
     nameController.dispose();
