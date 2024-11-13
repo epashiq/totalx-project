@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "377553949",
+    "project_id": "total-x-project-b89a1",
+    "storage_bucket": "total-x-project-b89a1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:377553949:android:6515c4d6d1dd9937d9b2f4",
+        "android_client_info": {
+          "package_name": "com.example.totalx_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2EXlTgCXPDFL7ZZQDbqe8GSEWNONEs2c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

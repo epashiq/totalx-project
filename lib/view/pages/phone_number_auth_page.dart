@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:totalx_project/view/pages/otp_verification_page.dart';
 
 class PhoneNumberAuthPage extends StatelessWidget {
   const PhoneNumberAuthPage({super.key});
@@ -15,7 +16,7 @@ class PhoneNumberAuthPage extends StatelessWidget {
             const SizedBox(
               height: 61,
             ),
-            Center(child: Image.asset('assets/images/OBJECTS_phone.png')),
+            Center(child: Image.asset('assets/images/object_otp.png')),
             const SizedBox(
               height: 49.26,
             ),
@@ -75,7 +76,13 @@ class PhoneNumberAuthPage extends StatelessWidget {
               height: 20,
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const OTPVerificationPage(),
+                    ));
+              },
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(338, 44),
                 backgroundColor: const Color(0xFF100E09),
