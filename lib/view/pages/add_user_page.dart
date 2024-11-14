@@ -87,6 +87,7 @@ class AddUserPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 15),
                 CustomTextFormField(
+                  
                     controller: userProvider.ageController,
                     hintText: 'Enter Age'),
                 const SizedBox(height: 15),

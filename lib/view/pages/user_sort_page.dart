@@ -123,6 +123,7 @@
 // }
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:totalx_project/controller/provider/user_sort_provider.dart';
 
@@ -133,7 +134,14 @@ class UserSortPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sorting Example'),
+        title: Text(
+          'Sort',
+          style: GoogleFonts.montserrat(
+              textStyle: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0XFF000000))),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -207,7 +215,7 @@ class UserSortPage extends StatelessWidget {
                         elevation: 5,
                         child: ListTile(
                           title: Text(item['name']),
-                          subtitle: Text('Phone: ${item['phone']}'),
+                          subtitle: Text('Age: ${item['phone']}'),
                         ),
                       );
                     },

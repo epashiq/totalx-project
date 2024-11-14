@@ -21,10 +21,10 @@ class CustomTextFormField extends StatelessWidget {
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: GoogleFonts.montserrat(
-          textStyle: TextStyle(
+          textStyle: const TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w400,
-              color: Color(0XFFFFFFFF)),
+              color: Color(0XFF000000)),
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),

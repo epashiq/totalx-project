@@ -150,8 +150,7 @@ class _UsersListPageState extends State<UsersListPage> {
 
   // Fetch users in batches of 10
   Future<void> _fetchUsers() async {
-    if (_isLoading || !_hasMore)
-      return; // Prevent multiple simultaneous fetches or if no more data
+    if (_isLoading || !_hasMore) return;
 
     setState(() {
       _isLoading = true;
@@ -218,99 +217,106 @@ class _UsersListPageState extends State<UsersListPage> {
           ),
         ),
       ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const SizedBox(height: 100),
-                  SizedBox(
-                    height: 44,
-                    width: 297,
-                    child: TextField(
-                      controller: _searchController,
-                      decoration: InputDecoration(
-                        prefixIcon: const Icon(Icons.search),
-                        hintText: 'Search by name or age',
-                        hintStyle: GoogleFonts.montserrat(
-                          textStyle: const TextStyle(
-                              fontSize: 13, fontWeight: FontWeight.w400),
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: const BorderSide(color: Colors.grey),
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const SizedBox(height: 100),
+                    SizedBox(
+                      height: 44,
+                      width: 297,
+                      child: TextField(
+                        controller: _searchController,
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.search),
+                          hintText: 'Search by name or age',
+                          hintStyle: GoogleFonts.montserrat(
+                            textStyle: const TextStyle(
+                                fontSize: 13, fontWeight: FontWeight.w400),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: const BorderSide(color: Colors.grey),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const UserSortPage(),
-                            ));
-                      },
-                      child: Image.asset('assets/images/sort_image.png')),
-                ],
-              ),
-              const SizedBox(height: 10),
-              Expanded(
-                child: _filteredUsers.isEmpty
-                    ? const Center(child: Text('No users found'))
-                    : ListView.builder(
-                        itemCount: _filteredUsers.length +
-                            (_isLoading
-                                ? 1
-                                : 0), // Add one for the loading indicator
-                        itemBuilder: (context, index) {
-                          if (index == _filteredUsers.length) {
-                            // Show loading indicator if it's the last item
-                            return const Center(
-                                child: CircularProgressIndicator());
-                          }
-
-                          final user = _filteredUsers[index];
-                          return Card(
-                            elevation: 5,
-                            child: ListTile(
-                              leading: const CircleAvatar(),
-                              title: Text(
-                                user['name'],
-                                style: GoogleFonts.montserrat(
-                                  textStyle: const TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w600,
-                                      color: Color(0XFF000000)),
-                                ),
-                              ),
-                              subtitle: Text(
-                                'Age: ${user['phone']}',
-                                style: GoogleFonts.montserrat(
-                                  textStyle: const TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color(0XFF000000)),
-                                ),
-                              ),
-                            ),
-                          );
+                    InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const UserSortPage(),
+                              ));
                         },
-                        controller: ScrollController()
-                          ..addListener(() {
-                            // Check if user has reached the bottom
-                            if (_isLoading || !_hasMore) return;
-                            if (_filteredUsers.isNotEmpty &&
-                                _filteredUsers.length == _allUsers.length) {
-                              _fetchUsers(); // Fetch more data
+                        child: Image.asset('assets/images/sort_image.png')),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Expanded(
+                  child: _filteredUsers.isEmpty
+                      ? const Center(child: Text('No users found'))
+                      : ListView.builder(
+                          itemCount: _filteredUsers.length +
+                              (_isLoading
+                                  ? 1
+                                  : 0), // Add one for the loading indicator
+                          itemBuilder: (context, index) {
+                            if (index == _filteredUsers.length) {
+                              // Show loading indicator if it's the last item
+                              return const Center(
+                                  child: CircularProgressIndicator());
                             }
-                          }),
-                      ),
-              ),
-            ],
+
+                            final user = _filteredUsers[index];
+                            return Card(
+                              elevation: 5,
+                              child: ListTile(
+                                leading: const CircleAvatar(
+                                  radius: 30,
+                                ),
+                                title: Text(
+                                  user['name'],
+                                  style: GoogleFonts.montserrat(
+                                    textStyle: const TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w600,
+                                        color: Color(0XFF000000)),
+                                  ),
+                                ),
+                                subtitle: Text(
+                                  'Age: ${user['phone']}',
+                                  style: GoogleFonts.montserrat(
+                                    textStyle: const TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
+                                        color: Color(0XFF000000)),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                          controller: ScrollController()
+                            ..addListener(() {
+                              // Check if user has reached the bottom
+                              if (_isLoading || !_hasMore) return;
+                              if (_filteredUsers.isNotEmpty &&
+                                  _filteredUsers.length == _allUsers.length) {
+                                _fetchUsers(); // Fetch more data
+                              }
+                            }),
+                        ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
