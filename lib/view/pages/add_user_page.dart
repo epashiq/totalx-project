@@ -362,6 +362,8 @@ class AddUserPage extends StatelessWidget {
                             MaterialPageRoute(
                               builder: (context) => const UsersListPage(),
                             ));
+                        // userProvider.nameController.dispose();
+                        // userProvider.ageController.dispose();
                       },
                       child: Text(
                         'Save',
