@@ -17,6 +17,13 @@ class UserProvider with ChangeNotifier {
   final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   final FirebaseStorage storage = FirebaseStorage.instance;
 
+  final List<QueryDocumentSnapshot<Map<String, dynamic>>> _allUsers = [];
+  List<QueryDocumentSnapshot<Map<String, dynamic>>> _filteredUsers = [];
+  final TextEditingController searchController = TextEditingController();
+
+  List<QueryDocumentSnapshot<Map<String, dynamic>>> get filteredUsers =>
+      _filteredUsers;
+
   Future<void> addUser(BuildContext context) async {
     try {
       await firebaseFirestore.collection('user').doc(nameController.text).set({
@@ -146,10 +153,38 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void fetchUsers() async {
+    FirebaseFirestore.instance
+        .collection('user')
+        .snapshots()
+        .listen((snapshot) {
+      _allUsers.clear();
+      _allUsers.addAll(snapshot.docs);
+      _filteredUsers = List.from(_allUsers);
+      notifyListeners();
+    });
+  }
+
+  userProvider() {
+    searchController.addListener(searchUsers);
+    fetchUsers();
+  }
+
+  void searchUsers() {
+    final query = searchController.text.trim().toLowerCase();
+    _filteredUsers = _allUsers.where((user) {
+      final name = user['name'].toString().toLowerCase();
+      final age = user['phone'].toString().toLowerCase();
+      return name.contains(query) || age.contains(query);
+    }).toList();
+    notifyListeners();
+  }
+
   @override
   void dispose() {
     nameController.dispose();
     ageController.dispose();
+    searchController.dispose();
     super.dispose();
   }
 }

@@ -4,9 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:totalx_project/controller/provider/auth_provider.dart';
 import 'package:totalx_project/controller/provider/auth_state_provider.dart';
 import 'package:totalx_project/controller/provider/user_provider.dart';
+import 'package:totalx_project/controller/provider/user_sort_provider.dart';
 import 'package:totalx_project/firebase_options.dart';
 import 'package:totalx_project/view/pages/add_user_page.dart';
-import 'package:totalx_project/view/pages/phone_number_auth_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => AuthStateProvider()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => UserSortProvider()),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
