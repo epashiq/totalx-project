@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:totalx_project/controller/provider/auth_provider.dart';
+import 'package:totalx_project/view/widgets/custom_text_button_widget.dart';
 
 class PhoneNumberAuthPage extends StatelessWidget {
   const PhoneNumberAuthPage({super.key});
@@ -82,31 +83,16 @@ class PhoneNumberAuthPage extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            ElevatedButton(
-              onPressed: () {
-                try {
-                  authProvider.verifyPhoneNumber(
-                    authProvider.mobileController.text);
-                } catch (e) {
-                  log(e.toString());
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(338, 44),
-                backgroundColor: const Color(0xFF100E09),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(60),
-                ),
-              ),
-              child: Text(
-                'Get OTP',
-                style: GoogleFonts.montserrat(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: const Color(0xFFFFFFFF),
-                ),
-              ),
-            )
+            CustomElevatedButton(
+                text: 'Get OTP',
+                onPressed: () {
+                  try {
+                    authProvider
+                        .verifyPhoneNumber(authProvider.mobileController.text);
+                  } catch (e) {
+                    log(e.toString());
+                  }
+                })
           ],
         ),
       )),

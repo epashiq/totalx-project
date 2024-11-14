@@ -118,6 +118,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:totalx_project/view/pages/user_sort_page.dart';
 
 class UsersListPage extends StatefulWidget {
   const UsersListPage({super.key});
@@ -245,7 +246,15 @@ class _UsersListPageState extends State<UsersListPage> {
                       ),
                     ),
                   ),
-                  Image.asset('assets/images/sort_image.png'),
+                  InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const UserSortPage(),
+                            ));
+                      },
+                      child: Image.asset('assets/images/sort_image.png')),
                 ],
               ),
               const SizedBox(height: 10),

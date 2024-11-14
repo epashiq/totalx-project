@@ -1,9 +1,11 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:async';
 
 import 'package:pinput/pinput.dart';
+import 'package:provider/provider.dart';
+import 'package:totalx_project/controller/provider/auth_provider.dart';
+import 'package:totalx_project/view/widgets/custom_text_button_widget.dart';
 
 class OTPVerificationPage extends StatefulWidget {
   final String verificationId;
@@ -12,10 +14,10 @@ class OTPVerificationPage extends StatefulWidget {
       {super.key, required this.verificationId, required this.resendToken});
 
   @override
-  _OTPVerificationPageState createState() => _OTPVerificationPageState();
+  OTPVerificationPageState createState() => OTPVerificationPageState();
 }
 
-class _OTPVerificationPageState extends State<OTPVerificationPage> {
+class OTPVerificationPageState extends State<OTPVerificationPage> {
   final _otpController = TextEditingController();
   int _seconds = 59;
   Timer? _timer;
@@ -46,7 +48,7 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
 
   @override
   Widget build(BuildContext context) {
-    // final authProvider = Provider.of<AuthProvider>(context);
+    final authProvider = Provider.of<AuthProvider>(context);
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -156,26 +158,11 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
                 ),
               ),
               const SizedBox(height: 16.0),
-              ElevatedButton(
-                onPressed: () async {
-                  
-                },
-                style: ElevatedButton.styleFrom(
-                  minimumSize: const Size(338, 44),
-                  backgroundColor: const Color(0xFF100E09),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(60),
-                  ),
-                ),
-                child: Text(
-                  'Verify',
-                  style: GoogleFonts.montserrat(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: const Color(0xFFFFFFFF),
-                  ),
-                ),
-              ),
+              CustomElevatedButton(
+                  text: 'Verify',
+                  onPressed: () {
+                    authProvider.verifyOtp(_otpController.text.trim());
+                  }),
               const SizedBox(height: 16.0),
             ],
           ),

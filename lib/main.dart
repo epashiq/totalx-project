@@ -8,6 +8,7 @@ import 'package:totalx_project/controller/provider/user_search_provider.dart';
 import 'package:totalx_project/controller/provider/user_sort_provider.dart';
 import 'package:totalx_project/firebase_options.dart';
 import 'package:totalx_project/view/pages/add_user_page.dart';
+import 'package:totalx_project/view/pages/phone_number_auth_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
           ),
-          home: const AddUserPage()),
+          home: const PhoneNumberAuthPage()),
     );
   }
 }
