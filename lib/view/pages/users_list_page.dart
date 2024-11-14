@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -53,7 +54,32 @@ class UsersListPage extends StatelessWidget {
                 ),
                 Image.asset('assets/images/sort_image.png')
               ],
-            )
+            ),
+            Expanded(
+                child: StreamBuilder(
+              stream: FirebaseFirestore.instance.collection('user').snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const LinearProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return Text('${snapshot.hasError}');
+                } else {
+                  return ListView.builder(
+                    itemCount: snapshot.data!.docs.length,
+                    itemBuilder: (context, index) {
+                      final user = snapshot.data!.docs[index];
+                      return Card(
+                        child: ListTile(
+                          leading: CircleAvatar(),
+                          title: Text(user['name']),
+                          subtitle: Text('age :,${user['phone']}'),
+                        ),
+                      );
+                    },
+                  );
+                }
+              },
+            ))
           ],
         ),
       )),
