@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:totalx_project/controller/provider/auth_provider.dart';
 import 'package:totalx_project/controller/provider/auth_state_provider.dart';
+import 'package:totalx_project/controller/provider/user_provider.dart';
 import 'package:totalx_project/firebase_options.dart';
 import 'package:totalx_project/view/pages/add_user_page.dart';
 import 'package:totalx_project/view/pages/phone_number_auth_page.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => AuthStateProvider()),
+        ChangeNotifierProvider(create: (_) => UserProvider()),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,

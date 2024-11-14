@@ -1,3 +1,4 @@
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,6 +11,8 @@ class PhoneNumberAuthPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
+    final phoneController = TextEditingController();
+    // final formKey = GlobalKey<FormState>();
     return Scaffold(
       body: SafeArea(
           child: Padding(
@@ -40,7 +43,7 @@ class PhoneNumberAuthPage extends StatelessWidget {
               height: 20,
             ),
             TextFormField(
-              controller: authProvider.mobileController,
+              controller: phoneController,
               keyboardType: TextInputType.phone,
               decoration: InputDecoration(
                 hintText: 'Enter Phone Number * ',
@@ -81,8 +84,12 @@ class PhoneNumberAuthPage extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                authProvider.signInWithPhone(
-                    authProvider.mobileController.text, context);
+                try {
+                  authProvider.verifyPhoneNumber(
+                    authProvider.mobileController.text);
+                } catch (e) {
+                  log(e.toString());
+                }
               },
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(338, 44),
@@ -104,11 +111,5 @@ class PhoneNumberAuthPage extends StatelessWidget {
         ),
       )),
     );
-  }
-
-  void sedPhoneNumber(BuildContext context) {
-    final authProvider = Provider.of<AuthProvider>(context, listen: false);
-    String phoneNumber = authProvider.mobileController.text.trim();
-    authProvider.signInWithPhone(phoneNumber, context);
   }
 }

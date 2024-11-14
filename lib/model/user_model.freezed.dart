@@ -22,8 +22,8 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) {
 mixin _$UserModel {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get phone => throw _privateConstructorUsedError;
-  String get imageUrl => throw _privateConstructorUsedError;
+  String get age => throw _privateConstructorUsedError;
+  String? get imageUrl => throw _privateConstructorUsedError;
 
   /// Serializes this UserModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -40,7 +40,7 @@ abstract class $UserModelCopyWith<$Res> {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) then) =
       _$UserModelCopyWithImpl<$Res, UserModel>;
   @useResult
-  $Res call({String id, String name, String phone, String imageUrl});
+  $Res call({String id, String name, String age, String? imageUrl});
 }
 
 /// @nodoc
@@ -60,8 +60,8 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? phone = null,
-    Object? imageUrl = null,
+    Object? age = null,
+    Object? imageUrl = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -72,14 +72,14 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      phone: null == phone
-          ? _value.phone
-          : phone // ignore: cast_nullable_to_non_nullable
+      age: null == age
+          ? _value.age
+          : age // ignore: cast_nullable_to_non_nullable
               as String,
-      imageUrl: null == imageUrl
+      imageUrl: freezed == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -92,7 +92,7 @@ abstract class _$$UserModelImplCopyWith<$Res>
       __$$UserModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, String phone, String imageUrl});
+  $Res call({String id, String name, String age, String? imageUrl});
 }
 
 /// @nodoc
@@ -110,8 +110,8 @@ class __$$UserModelImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? phone = null,
-    Object? imageUrl = null,
+    Object? age = null,
+    Object? imageUrl = freezed,
   }) {
     return _then(_$UserModelImpl(
       id: null == id
@@ -122,14 +122,14 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      phone: null == phone
-          ? _value.phone
-          : phone // ignore: cast_nullable_to_non_nullable
+      age: null == age
+          ? _value.age
+          : age // ignore: cast_nullable_to_non_nullable
               as String,
-      imageUrl: null == imageUrl
+      imageUrl: freezed == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -140,7 +140,7 @@ class _$UserModelImpl implements _UserModel {
   _$UserModelImpl(
       {required this.id,
       required this.name,
-      required this.phone,
+      required this.age,
       required this.imageUrl});
 
   factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -151,13 +151,13 @@ class _$UserModelImpl implements _UserModel {
   @override
   final String name;
   @override
-  final String phone;
+  final String age;
   @override
-  final String imageUrl;
+  final String? imageUrl;
 
   @override
   String toString() {
-    return 'UserModel(id: $id, name: $name, phone: $phone, imageUrl: $imageUrl)';
+    return 'UserModel(id: $id, name: $name, age: $age, imageUrl: $imageUrl)';
   }
 
   @override
@@ -167,14 +167,14 @@ class _$UserModelImpl implements _UserModel {
             other is _$UserModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.phone, phone) || other.phone == phone) &&
+            (identical(other.age, age) || other.age == age) &&
             (identical(other.imageUrl, imageUrl) ||
                 other.imageUrl == imageUrl));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, phone, imageUrl);
+  int get hashCode => Object.hash(runtimeType, id, name, age, imageUrl);
 
   /// Create a copy of UserModel
   /// with the given fields replaced by the non-null parameter values.
@@ -196,8 +196,8 @@ abstract class _UserModel implements UserModel {
   factory _UserModel(
       {required final String id,
       required final String name,
-      required final String phone,
-      required final String imageUrl}) = _$UserModelImpl;
+      required final String age,
+      required final String? imageUrl}) = _$UserModelImpl;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$UserModelImpl.fromJson;
@@ -207,9 +207,9 @@ abstract class _UserModel implements UserModel {
   @override
   String get name;
   @override
-  String get phone;
+  String get age;
   @override
-  String get imageUrl;
+  String? get imageUrl;
 
   /// Create a copy of UserModel
   /// with the given fields replaced by the non-null parameter values.
