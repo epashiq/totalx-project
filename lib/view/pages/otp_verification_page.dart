@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
 import 'package:totalx_project/controller/provider/auth_provider.dart';
+import 'package:totalx_project/view/pages/add_user_page.dart';
 import 'package:totalx_project/view/widgets/custom_text_button_widget.dart';
 
 class OTPVerificationPage extends StatefulWidget {
@@ -162,6 +163,11 @@ class OTPVerificationPageState extends State<OTPVerificationPage> {
                   text: 'Verify',
                   onPressed: () {
                     authProvider.verifyOtp(_otpController.text.trim());
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const AddUserPage(),
+                        ));
                   }),
               const SizedBox(height: 16.0),
             ],
