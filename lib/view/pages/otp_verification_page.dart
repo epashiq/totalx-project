@@ -89,7 +89,7 @@ class OTPVerificationPageState extends State<OTPVerificationPage> {
                   height: 56,
                   textStyle: const TextStyle(
                     fontSize: 20,
-                    color: Colors.black,
+                    color: Color(0XFFFF5454),
                     fontWeight: FontWeight.w600,
                   ),
                   decoration: BoxDecoration(

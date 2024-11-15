@@ -1,106 +1,3 @@
-// import 'dart:developer';
-
-// import 'package:flutter/material.dart';
-// import 'package:google_fonts/google_fonts.dart';
-// import 'package:provider/provider.dart';
-// import 'package:totalx_project/controller/provider/auth_provider.dart';
-// import 'package:totalx_project/view/pages/otp_verification_page.dart';
-// import 'package:totalx_project/view/widgets/custom_text_button_widget.dart';
-
-// class PhoneNumberAuthPage extends StatelessWidget {
-//   const PhoneNumberAuthPage({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final authProvider = Provider.of<AuthProvider>(context);
-//     final phoneController = TextEditingController();
-//     // final formKey = GlobalKey<FormState>();
-//     return Scaffold(
-//       body: SafeArea(
-//           child: Padding(
-//         padding: const EdgeInsets.all(16),
-//         child: Column(
-//           children: [
-//             const SizedBox(
-//               height: 61,
-//             ),
-//             Center(child: Image.asset('assets/images/object_otp.png')),
-//             const SizedBox(
-//               height: 49.26,
-//             ),
-//             Padding(
-//               padding: const EdgeInsets.symmetric(horizontal: 24),
-//               child: Align(
-//                 alignment: Alignment.bottomLeft,
-//                 child: Text('Enter Phone Number',
-//                     style: GoogleFonts.montserrat(
-//                       textStyle: const TextStyle(
-//                           fontSize: 14,
-//                           fontWeight: FontWeight.w600,
-//                           color: Color(0XFF333333)),
-//                     )),
-//               ),
-//             ),
-//             const SizedBox(
-//               height: 20,
-//             ),
-//             TextFormField(
-//               controller: phoneController,
-//               keyboardType: TextInputType.phone,
-//               decoration: InputDecoration(
-//                 hintText: 'Enter Phone Number * ',
-//                 hintStyle: GoogleFonts.montserrat(
-//                     textStyle: const TextStyle(
-//                         fontSize: 12, fontWeight: FontWeight.w400)),
-//                 border: OutlineInputBorder(
-//                   borderRadius: BorderRadius.circular(8),
-//                   borderSide: const BorderSide(color: Colors.grey),
-//                 ),
-//               ),
-//             ),
-//             const SizedBox(
-//               height: 20,
-//             ),
-//             InkWell(
-//               onTap: () {},
-//               child: RichText(
-//                   text: TextSpan(children: [
-//                 TextSpan(
-//                     text: 'By Continuing, I agree to TotalX’s',
-//                     style: GoogleFonts.montserrat(
-//                         textStyle: const TextStyle(
-//                             fontSize: 11,
-//                             fontWeight: FontWeight.w600,
-//                             color: Color(0XFF000000)))),
-//                 TextSpan(
-//                     text: 'Terms and condition &privacy policy',
-//                     style: GoogleFonts.montserrat(
-//                         textStyle: const TextStyle(
-//                             fontSize: 13,
-//                             fontWeight: FontWeight.w600,
-//                             color: Color(0XFF2873F0))))
-//               ])),
-//             ),
-//             const SizedBox(
-//               height: 20,
-//             ),
-//             CustomElevatedButton(
-//                 text: 'Get OTP',
-//                 onPressed: () {
-//                   try {
-//                     authProvider.signInWithPhone(
-//                         authProvider.mobileController.text, context);
-//                   } catch (e) {
-//                     log(e.toString());
-//                   }
-//                 })
-//           ],
-//         ),
-//       )),
-//     );
-//   }
-// }
-
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -108,16 +5,20 @@ import 'package:provider/provider.dart';
 import 'package:totalx_project/controller/provider/auth_provider.dart';
 import 'package:totalx_project/view/widgets/custom_text_button_widget.dart';
 
+/// A page for phone number authentication where users enter their phone number to receive an OTP.
 class PhoneNumberAuthPage extends StatelessWidget {
   PhoneNumberAuthPage({super.key});
 
-  final formKey = GlobalKey<FormState>(); // Moved outside build
+  // Key for form validation.
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    // Access AuthProvider for authentication operations.
     final authProvider = context.read<AuthProvider>();
 
     return Scaffold(
+      // Provides a safe area for UI to avoid system intrusions.
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
@@ -125,9 +26,12 @@ class PhoneNumberAuthPage extends StatelessWidget {
             key: formKey,
             child: Column(
               children: [
+                // Adds spacing and an image for visual purpose.
                 const SizedBox(height: 61),
-                Center(child: Image.asset('assets/images/object_otp.png')),
+                Center(child: Image.asset('assets/images/OBJECTS_phone.png')),
                 const SizedBox(height: 49.26),
+
+                // Displaying the phone number input label.
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: Align(
@@ -142,7 +46,10 @@ class PhoneNumberAuthPage extends StatelessWidget {
                     ),
                   ),
                 ),
+
                 const SizedBox(height: 20),
+
+                // Input field for phone number with validation.
                 TextFormField(
                   controller: authProvider.mobileController,
                   keyboardType: TextInputType.phone,
@@ -158,6 +65,7 @@ class PhoneNumberAuthPage extends StatelessWidget {
                       borderSide: const BorderSide(color: Colors.grey),
                     ),
                   ),
+                  // Validates the phone number format and displays an error if invalid.
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your phone number';
@@ -168,10 +76,13 @@ class PhoneNumberAuthPage extends StatelessWidget {
                     return null;
                   },
                 ),
+
                 const SizedBox(height: 20),
+
+                // A link to Terms and Conditions that opens when tapped.
                 InkWell(
                   onTap: () {
-                    // Navigate to Terms and Conditions
+                    // Navigate to Terms and Conditions page.
                   },
                   child: RichText(
                     text: TextSpan(
@@ -196,17 +107,23 @@ class PhoneNumberAuthPage extends StatelessWidget {
                     ),
                   ),
                 ),
+
                 const SizedBox(height: 20),
+
+                // Button to initiate OTP retrieval on form validation.
                 CustomElevatedButton(
                   text: 'Get OTP',
                   onPressed: () async {
+                    // Validates the form before sending OTP.
                     if (formKey.currentState?.validate() ?? false) {
                       try {
+                        // Calls sign-in with phone number on AuthProvider.
                         await authProvider.signInWithPhone(
                           authProvider.mobileController.text,
                           context,
                         );
                       } catch (e) {
+                        // Shows an error message if sign-in fails.
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text('Error: ${e.toString()}'),

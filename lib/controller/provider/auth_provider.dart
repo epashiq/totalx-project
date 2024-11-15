@@ -155,49 +155,6 @@ class AuthProvider with ChangeNotifier {
     super.dispose();
     mobileController.dispose();
   }
-
-   Future<(String, int?)> verifyPhoneNumber(String number, [int? resendToken]) async {
-  if (number.isEmpty) {
-    throw Exception("Please enter a valid phone number.");
-  }
-
-  try {
-    final verificationIdCompleter = Completer<String>();
-    final resendTokenCompleter = Completer<int?>();
-
-    await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: number,
-      forceResendingToken: resendToken,
-      verificationCompleted: (PhoneAuthCredential credential) async {
-        log('Verification completed');
-        await FirebaseAuth.instance.signInWithCredential(credential);
-      },
-      verificationFailed: (FirebaseAuthException e) {
-        log('Verification failed: ${e.message}');
-        if (e.code == 'invalid-phone-number') {
-          throw Exception("The provided phone number is not valid.");
-        } else {
-          throw Exception("Phone number verification failed. Please try again.");
-        }
-      },
-      codeSent: (String verificationId, int? newResendToken) {
-        verificationIdCompleter.complete(verificationId);
-        resendTokenCompleter.complete(newResendToken);
-        
-      },
-      codeAutoRetrievalTimeout: (String verificationId) {
-        log('Code retrieval timeout');
-      },
-    );
-
-    final verificationId = await verificationIdCompleter.future;
-    final newResendToken = await resendTokenCompleter.future;
-    return (verificationId, newResendToken);
-  } catch (e) {
-    throw Exception("An error occurred during phone verification. Please try again later.");
-  }
-}
-
 }
 
 
