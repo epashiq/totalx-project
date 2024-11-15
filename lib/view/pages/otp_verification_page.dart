@@ -8,6 +8,7 @@ import 'package:totalx_project/controller/provider/auth_provider.dart';
 import 'package:totalx_project/view/pages/add_user_page.dart';
 import 'package:totalx_project/view/widgets/custom_text_button_widget.dart';
 
+/// A page for verifying OTP with a countdown timer and option to resend OTP.
 class OTPVerificationPage extends StatefulWidget {
   final String verificationId;
   final int? resendToken;
@@ -19,29 +20,30 @@ class OTPVerificationPage extends StatefulWidget {
 }
 
 class OTPVerificationPageState extends State<OTPVerificationPage> {
-  final _otpController = TextEditingController();
-  int _seconds = 59;
-  Timer? _timer;
+  final _otpController = TextEditingController(); // Controller for OTP input
+  int _seconds = 59; // Initial countdown time
+  Timer? _timer; // Timer for OTP countdown
 
   @override
   void initState() {
     super.initState();
-    _startTimer();
+    _startTimer(); // Start countdown timer on page load
   }
 
   @override
   void dispose() {
-    _timer?.cancel();
-    _otpController.dispose();
+    _timer?.cancel(); // Cancel timer on dispose
+    _otpController.dispose(); // Dispose controller
     super.dispose();
   }
 
+  // Starts a countdown timer to resend OTP
   void _startTimer() {
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         _seconds--;
         if (_seconds == 0) {
-          _timer?.cancel();
+          _timer?.cancel(); // Stop timer at 0 seconds
         }
       });
     });
@@ -49,7 +51,8 @@ class OTPVerificationPageState extends State<OTPVerificationPage> {
 
   @override
   Widget build(BuildContext context) {
-    final authProvider = Provider.of<AuthProvider>(context);
+    final authProvider =
+        Provider.of<AuthProvider>(context); // Provider for auth actions
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -57,10 +60,12 @@ class OTPVerificationPageState extends State<OTPVerificationPage> {
           child: Column(
             children: [
               const SizedBox(height: 42),
+              // Image at the top for visual representation
               Center(
                 child: Image.asset('assets/images/object_otp.png'),
               ),
               const SizedBox(height: 16.0),
+              // Title for OTP verification section
               Align(
                 alignment: Alignment.bottomLeft,
                 child: Text('OTP Verification',
@@ -72,15 +77,17 @@ class OTPVerificationPageState extends State<OTPVerificationPage> {
                     )),
               ),
               const SizedBox(height: 16.0),
+              // Information text about OTP
               Text(
                 'Enter the verification code we just sent to your number +91 *****21.',
                 style: GoogleFonts.montserrat(
                     textStyle: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
-                        color: const Color(0XFF000000))),
+                        color: Color(0XFF000000))),
               ),
               const SizedBox(height: 16.0),
+              // OTP input field with custom styling
               Pinput(
                 controller: _otpController,
                 length: 6,
@@ -113,6 +120,7 @@ class OTPVerificationPageState extends State<OTPVerificationPage> {
                 keyboardType: TextInputType.number,
               ),
               const SizedBox(width: 16),
+              // Countdown timer display
               Center(
                 child: Text(
                   '$_seconds Sec',
@@ -124,6 +132,7 @@ class OTPVerificationPageState extends State<OTPVerificationPage> {
                 ),
               ),
               const SizedBox(height: 16.0),
+              // Resend OTP prompt with clickable text
               Center(
                 child: RichText(
                   text: TextSpan(
@@ -143,7 +152,6 @@ class OTPVerificationPageState extends State<OTPVerificationPage> {
                               _seconds = 59;
                               _startTimer();
                             });
-                            // Add logic for resending OTP here
                           },
                           child: Text('Resend',
                               style: GoogleFonts.montserrat(
@@ -159,6 +167,7 @@ class OTPVerificationPageState extends State<OTPVerificationPage> {
                 ),
               ),
               const SizedBox(height: 16.0),
+              // Verify button to confirm OTP
               CustomElevatedButton(
                   text: 'Verify',
                   onPressed: () {

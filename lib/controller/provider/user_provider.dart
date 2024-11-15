@@ -31,11 +31,11 @@ class UserProvider with ChangeNotifier {
         'phone': ageController.text,
       });
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('User added successfully')));
+          .showSnackBar(const SnackBar(content:  Text('User added successfully')));
       log('User added successfully');
     } catch (e) {
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('User added failed')));
+          .showSnackBar(const SnackBar(content: Text('User added failed')));
 
       log(e.toString());
     }
